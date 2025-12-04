@@ -31,6 +31,7 @@ export default function Exam() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const [showQuitModal, setShowQuitModal] = useState(false)
 
   // 問題を取得
   useEffect(() => {
@@ -195,6 +196,14 @@ export default function Exam() {
               ⏱️ {formatTime(timeLeft)}
             </div>
             
+            {/* 中断ボタン */}
+            <button
+              onClick={() => setShowQuitModal(true)}
+              className="px-3 py-1 text-sm text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors"
+            >
+              中断する
+            </button>
+            
             {/* 進捗 */}
             <div className="text-right">
               <span className="text-lg font-bold text-sky-800">
@@ -312,6 +321,41 @@ export default function Exam() {
                   className="btn-primary flex-1"
                 >
                   終了する
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 中断確認モーダル */}
+      {showQuitModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="card max-w-sm w-full">
+            <div className="text-center">
+              <div className="text-4xl mb-4">🛑</div>
+              <h2 className="text-xl font-bold text-gray-800 mb-2">
+                試験を中断しますか？
+              </h2>
+              <p className="text-gray-600 mb-4">
+                現在 <span className="font-bold text-sky-600">{answeredCount}問</span> 回答済みです。
+              </p>
+              <p className="text-sm text-red-600 mb-6">
+                ⚠️ 中断すると、未回答の <span className="font-bold">{questions.length - answeredCount}問</span> は<br />
+                すべて不正解として採点されます。
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowQuitModal(false)}
+                  className="btn-secondary flex-1"
+                >
+                  続ける
+                </button>
+                <button
+                  onClick={handleFinish}
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-3 rounded-xl font-semibold flex-1 transition-colors"
+                >
+                  中断して採点
                 </button>
               </div>
             </div>
