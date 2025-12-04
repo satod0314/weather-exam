@@ -57,7 +57,7 @@ export const calculateScore = (
   let score = 0
   questions.forEach(question => {
     const userAnswer = answers.get(question.id)
-    if (userAnswer === question.correct_answer) {
+    if (userAnswer === question.correctAnswer) {
       score++
     }
   })
