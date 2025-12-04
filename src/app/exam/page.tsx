@@ -47,7 +47,7 @@ export default function Exam() {
         }
 
         // DBデータを変換
-        const convertedData = data.map(convertQuestion)
+        const convertedData = (data as QuestionRow[]).map(convertQuestion)
         
         // 試験問題を生成
         const examQuestions = generateExamQuestions(convertedData)

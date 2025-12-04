@@ -1,3 +1,12 @@
+// 試験結果の詳細（どの問題を間違えたか等）
+export type ExamResultDetails = {
+  answers: {
+    questionId: number
+    userAnswer: 'A' | 'B' | 'C' | 'D' | null
+    isCorrect: boolean
+  }[]
+}
+
 export type Database = {
   public: {
     Tables: {
@@ -106,14 +115,8 @@ export const convertToQuestion = (row: QuestionRow): Question => ({
 // 試験結果の型
 export type ExamResult = Database['public']['Tables']['exam_results']['Row']
 
-// 試験結果の詳細（どの問題を間違えたか等）
-export type ExamResultDetails = {
-  answers: {
-    questionId: number
-    userAnswer: 'A' | 'B' | 'C' | 'D' | null
-    isCorrect: boolean
-  }[]
-}
+// 試験結果のInsert型
+export type ExamResultInsert = Database['public']['Tables']['exam_results']['Insert']
 
 // カテゴリの型
 export type Category = '知識' | '防災' | '生活' | '文化'
@@ -123,4 +126,3 @@ export type AnswerState = {
   questionId: number
   selectedAnswer: 'A' | 'B' | 'C' | 'D' | null
 }
-

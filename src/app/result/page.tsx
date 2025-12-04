@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
-import type { Question, ExamResultDetails } from '@/types/database'
+import type { Question, ExamResultDetails, ExamResultInsert } from '@/types/database'
 
 type ExamResultData = {
   questions: Question[]
@@ -94,13 +94,15 @@ export default function Result() {
         })),
       }
 
+      const insertData: ExamResultInsert = {
+        user_name: userName.trim(),
+        score,
+        details,
+      }
+
       const { error } = await supabase
         .from('exam_results')
-        .insert({
-          user_name: userName.trim(),
-          score,
-          details,
-        })
+        .insert(insertData as never)
 
       if (error) throw error
 

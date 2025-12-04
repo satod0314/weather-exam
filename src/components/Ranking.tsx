@@ -22,7 +22,7 @@ export default function Ranking() {
         .limit(10)
 
       if (error) throw error
-      setResults(data || [])
+      setResults((data || []) as ExamResult[])
     } catch (error) {
       console.error('ランキング取得エラー:', error)
     } finally {
