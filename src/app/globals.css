@@ -1,8 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 気象をイメージした青空カラーパレット */
+  --sky-50: #f0f9ff;
+  --sky-100: #e0f2fe;
+  --sky-200: #bae6fd;
+  --sky-300: #7dd3fc;
+  --sky-400: #38bdf8;
+  --sky-500: #0ea5e9;
+  --sky-600: #0284c7;
+  --sky-700: #0369a1;
+  --sky-800: #075985;
+  --sky-900: #0c4a6e;
+  
+  /* アクセントカラー */
+  --sun-yellow: #fbbf24;
+  --sun-orange: #f97316;
+  --cloud-white: #f8fafc;
+  --rain-blue: #3b82f6;
+  
+  /* セマンティックカラー */
+  --success: #22c55e;
+  --error: #ef4444;
+  --warning: #f59e0b;
+  
+  --background: var(--sky-50);
+  --foreground: var(--sky-900);
+  --card-bg: #ffffff;
+  --card-border: var(--sky-200);
 }
 
 @theme inline {
@@ -12,15 +37,235 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(180deg, var(--sky-100) 0%, var(--sky-50) 50%, var(--cloud-white) 100%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "BIZ UDPGothic", "Noto Sans JP", sans-serif;
+  min-height: 100vh;
+}
+
+/* カスタムスクロールバー */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sky-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sky-400);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sky-500);
+}
+
+/* ボタンスタイル */
+.btn-primary {
+  background: linear-gradient(135deg, var(--sky-500) 0%, var(--sky-600) 100%);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.125rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--sky-700);
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 500;
+  border: 2px solid var(--sky-300);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--sky-50);
+  border-color: var(--sky-400);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* カードスタイル */
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--card-border);
+}
+
+/* 選択肢ボタン */
+.option-btn {
+  width: 100%;
+  text-align: left;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  border: 2px solid var(--sky-200);
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.option-btn:hover {
+  border-color: var(--sky-400);
+  background: var(--sky-50);
+}
+
+.option-btn.selected {
+  border-color: var(--sky-500);
+  background: var(--sky-100);
+}
+
+.option-btn.correct {
+  border-color: var(--success);
+  background: #dcfce7;
+}
+
+.option-btn.incorrect {
+  border-color: var(--error);
+  background: #fee2e2;
+}
+
+.option-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--sky-100);
+  color: var(--sky-700);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.option-btn.selected .option-label {
+  background: var(--sky-500);
+  color: white;
+}
+
+/* プログレスバー */
+.progress-bar {
+  height: 8px;
+  background: var(--sky-200);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sky-400) 0%, var(--sky-500) 100%);
+  transition: width 0.3s ease;
+}
+
+/* タイマー */
+.timer {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.timer.warning {
+  color: var(--warning);
+}
+
+.timer.danger {
+  color: var(--error);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* 紙吹雪アニメーション */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  top: 0;
+  animation: confetti-fall 3s ease-out forwards;
+}
+
+/* フェードイン */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* スライドイン */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in {
+  animation: slideIn 0.4s ease-out;
 }
